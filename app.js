@@ -32,6 +32,7 @@ app.use('/scenarios', scenarioRoutes);
 app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
+console.log("DEBUG: Connecting to host ->", process.env.DB_HOST);
 
 (async () => {
   try {
