@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       difficulty_level: {
-        type: DataTypes.TINYINT.UNSIGNED,
+        type: DataTypes.SMALLINT,
         allowNull: false,
         validate: {
           min: 1,

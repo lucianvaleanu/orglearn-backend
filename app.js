@@ -32,16 +32,25 @@ app.use('/scenarios', scenarioRoutes);
 app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
-console.log("DEBUG: Connecting to host ->", process.env.DB_HOST);
 
 (async () => {
   try {
     await sequelize.authenticate();
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
+    console.log('Database connection established');
   } catch (error) {
-    console.error('Failed to start server', error);
+    console.error('Database connection failed', error);
     process.exit(1);
   }
+
+  try {
+    await sequelize.sync({ alter: true });
+    console.log('Database schema synchronized');
+  } catch (error) {
+    console.error('Database schema synchronization failed', error);
+    process.exit(1);
+  }
+
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
 })();

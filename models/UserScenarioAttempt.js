@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       attempt_number: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
         allowNull: false
       },
       status: {
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 'in_progress'
       },
       score: {
-        type: DataTypes.TINYINT.UNSIGNED,
+        type: DataTypes.SMALLINT,
         allowNull: true,
         validate: {
           min: 0,

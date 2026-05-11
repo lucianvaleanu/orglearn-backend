@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 'not_started'
       },
       score: {
-        type: DataTypes.TINYINT.UNSIGNED,
+        type: DataTypes.SMALLINT,
         allowNull: true,
         validate: {
           min: 0,
