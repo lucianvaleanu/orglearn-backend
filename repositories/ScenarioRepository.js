@@ -1,4 +1,3 @@
-const { Op } = require('sequelize');
 const { Scenario, Domain, UserProgress } = require('../models');
 
 class ScenarioRepository {
@@ -76,14 +75,8 @@ class ScenarioRepository {
   }
 
   async getNextNotStartedScenarioInDomain(userId, domainId) {
-    return Scenario.findOne({
-      where: {
-        domain_id: domainId,
-        [Op.or]: [
-          { '$userProgressEntries.id$': null },
-          { '$userProgressEntries.status$': 'not_started' }
-        ]
-      },
+    const scenarios = await Scenario.findAll({
+      where: { domain_id: domainId },
       include: [
         {
           model: Domain,
@@ -100,6 +93,15 @@ class ScenarioRepository {
       ],
       order: [['title', 'ASC']]
     });
+
+    return (
+      scenarios.find((scenario) => {
+        const progressEntry = Array.isArray(scenario.userProgressEntries)
+          ? scenario.userProgressEntries[0]
+          : null;
+        return !progressEntry || progressEntry.status === 'not_started';
+      }) || null
+    );
   }
 }
 
