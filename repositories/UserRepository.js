@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, UserProgress } = require('../models');
 
 class UserRepository {
   async findByEmail(email) {
@@ -24,6 +24,18 @@ class UserRepository {
   async updateById(userId, updates) {
     await User.update(updates, { where: { id: userId } });
     return User.findByPk(userId);
+  }
+
+  async getRankAndStats(userId) {
+    return User.findByPk(userId, {
+      attributes: ['id', 'current_rank', 'overall_progress_percentage']
+    });
+  }
+
+  async getTotalScore(userId) {
+    return UserProgress.sum('score', {
+      where: { user_id: userId, status: 'completed' }
+    });
   }
 }
 

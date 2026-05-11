@@ -9,6 +9,9 @@ const { sequelize } = require('./models');
 require('./auth.config');
 const authRoutes = require('./routes/auth');
 const scenarioRoutes = require('./routes/scenarios');
+const domainRoutes = require('./routes/domains');
+const attemptRoutes = require('./routes/attempts');
+const userRoutes = require('./routes/user');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -19,6 +22,9 @@ app.use(express.json());
 app.use(passport.initialize());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/domains', domainRoutes);
+app.use('/api/attempts', attemptRoutes);
+app.use('/api/user', userRoutes);
 app.use('/scenarios', scenarioRoutes);
 app.use(errorHandler);
 
