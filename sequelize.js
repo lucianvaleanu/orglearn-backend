@@ -6,7 +6,12 @@ const sequelize = isTest
   ? new Sequelize({
       dialect: 'sqlite',
       storage: ':memory:',
-      logging: false
+      logging: false,
+      pool: {
+        max: 1,
+        min: 0,
+        idle: 0
+      }
     })
   : new Sequelize(
       process.env.DB_NAME,
