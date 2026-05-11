@@ -27,6 +27,10 @@ module.exports = (error, req, res, next) => {
       message: error.message,
       stack: error.stack
     });
+
+    if (process.env.NODE_ENV !== 'production') {
+      message = error.message;
+    }
   }
 
   res.status(status).json({

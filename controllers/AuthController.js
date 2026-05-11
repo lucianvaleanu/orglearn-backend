@@ -7,6 +7,7 @@ class AuthController {
       const user = await authService.signup({ name, email, password });
       res.status(201).json({ user });
     } catch (error) {
+      console.error(error);
       next(error);
     }
   }
