@@ -2,9 +2,6 @@ const { Sequelize } = require('sequelize');
 
 const sslEnabled = process.env.DB_SSL === 'true';
 
-console.log("Checking DB Host:", process.env.DB_HOST ? "Defined" : "UNDEFINED");
-console.log("Checking DB User:", process.env.DB_USER ? "Defined" : "UNDEFINED");
-
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
