@@ -16,9 +16,22 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true
       },
+      google_id: {
+        type: DataTypes.STRING(255),
+        allowNull: true
+      },
+      apple_id: {
+        type: DataTypes.STRING(255),
+        allowNull: true
+      },
+      password_hash: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+      },
       current_rank: {
         type: DataTypes.STRING(40),
-        allowNull: false
+        allowNull: false,
+        defaultValue: 'Junior'
       },
       overall_progress_percentage: {
         type: DataTypes.DECIMAL(5, 2),
