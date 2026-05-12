@@ -31,6 +31,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/domains', domainRoutes);
 app.use('/api/attempts', attemptRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/scenarios', scenarioRoutes);
 app.use('/scenarios', scenarioRoutes);
 app.use(errorHandler);
 

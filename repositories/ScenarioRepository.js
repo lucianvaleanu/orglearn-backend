@@ -74,6 +74,19 @@ class ScenarioRepository {
     return domain ? domain.id : null;
   }
 
+  // Model access: fetch a scenario with its domain for detail views.
+  async getScenarioById(id) {
+    return Scenario.findByPk(id, {
+      include: [
+        {
+          model: Domain,
+          as: 'domain',
+          attributes: ['id', 'title']
+        }
+      ]
+    });
+  }
+
   async getNextNotStartedScenarioInDomain(userId, domainId) {
     const scenarios = await Scenario.findAll({
       where: { domain_id: domainId },

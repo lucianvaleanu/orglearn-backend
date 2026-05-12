@@ -12,6 +12,20 @@ const scenarioSelectionSchema = z.object({
   })
 });
 
+const scenarioByIdSchema = z.object({
+  params: z.object({
+    id: z.string().uuid()
+  })
+});
+
+// Route layer: authorize and validate before handing off to the controller.
+router.get(
+  '/:id',
+  authMiddleware,
+  validate(scenarioByIdSchema),
+  scenarioController.getScenarioById
+);
+
 router.get(
   '/selection/:userId',
   authMiddleware,
