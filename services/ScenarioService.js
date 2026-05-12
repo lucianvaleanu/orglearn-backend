@@ -22,10 +22,16 @@ class ScenarioService {
   }
 
   getActionForStatus(status) {
-    if (status === 'completed') {
-      return 'Repeat';
+    switch (status) {
+      case 'completed':
+        return 'Repeat';
+      case 'in_progress':
+        return 'Continue';
+      case 'not_started':
+        return 'Start';
+      default:
+        return 'Continue';
     }
-    return 'Continue';
   }
 }
 
