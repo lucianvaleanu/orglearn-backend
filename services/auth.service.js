@@ -5,6 +5,7 @@ const userRepository = require('../repositories/UserRepository');
 
 const SALT_ROUNDS = 10;
 const TOKEN_EXPIRES_IN = '24h';
+const DEFAULT_ROLE = 'user';
 
 class AuthService {
   async signup({ name, email, password }) {
@@ -21,6 +22,7 @@ class AuthService {
       name,
       email,
       password_hash: passwordHash,
+      role: DEFAULT_ROLE,
       current_rank: 'Junior'
     });
 
@@ -87,6 +89,7 @@ class AuthService {
       name: this.buildName(name, email),
       email,
       password_hash: passwordHash,
+      role: DEFAULT_ROLE,
       current_rank: 'Junior',
       ...this.getProviderField(provider, providerId)
     });
@@ -128,20 +131,20 @@ class AuthService {
     return {};
   }
 
-  generateToken(userId) {
+  generateToken(userId, role) {
     if (!process.env.JWT_SECRET) {
       const error = new Error('JWT secret not configured');
       error.statusCode = 500;
       throw error;
     }
 
-    return jwt.sign({ userId }, process.env.JWT_SECRET, {
+    return jwt.sign({ userId, role }, process.env.JWT_SECRET, {
       expiresIn: TOKEN_EXPIRES_IN
     });
   }
 
   createAuthResponse(user) {
-    const token = this.generateToken(user.id);
+    const token = this.generateToken(user.id, user.role || DEFAULT_ROLE);
     return {
       token,
       user: this.sanitizeUser(user)

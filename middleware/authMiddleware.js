@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { userId: payload.userId };
+    req.user = { userId: payload.userId, role: payload.role || 'user' };
     return next();
   } catch (error) {
     return res.status(401).json({ message: 'Unauthorized' });

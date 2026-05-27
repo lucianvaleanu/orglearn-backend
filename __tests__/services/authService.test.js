@@ -50,6 +50,7 @@ describe('AuthService', () => {
       name: payload.name,
       email: payload.email,
       password_hash: 'hashed',
+      role: 'user',
       current_rank: 'Junior'
     });
     expect(result.password_hash).toBeUndefined();
@@ -59,10 +60,10 @@ describe('AuthService', () => {
   it('should generate a JWT token using the configured secret', () => {
     jwt.sign.mockReturnValue('jwt-token');
 
-    const token = authService.generateToken('user-123');
+    const token = authService.generateToken('user-123', 'admin');
 
     expect(jwt.sign).toHaveBeenCalledWith(
-      { userId: 'user-123' },
+      { userId: 'user-123', role: 'admin' },
       'test-secret',
       { expiresIn: '24h' }
     );
